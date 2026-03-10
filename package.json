@@ -1,0 +1,22 @@
+{
+  "name": "bddpijak",
+  "type": "module",
+  "devDependencies": {
+    "@wdio/allure-reporter": "^9.24.0",
+    "@wdio/appium-service": "^9.24.0",
+    "@wdio/cucumber-framework": "^9.24.0",
+    "@wdio/json-reporter": "^9.20.0",
+    "@wdio/local-runner": "^9.24.0",
+    "@wdio/spec-reporter": "^9.24.0",
+    "allure-commandline": "^2.37.0",
+    "appium-uiautomator2-driver": "^7.0.0",
+    "cli-table3": "^0.6.5",
+    "wdio-cucumberjs-json-reporter": "^6.0.1"
+  },
+  "scripts": {
+    "test": "npx wdio run ./wdio.conf.ts",
+    "send-report": "npx tsx ./src/utils/send-to-teams.ts",
+    "login": "npx wdio run ./wdio.conf.ts --spec features/login.feature",
+    "program": "npx wdio run ./wdio.conf.ts --spec features/program.feature"
+  }
+}
