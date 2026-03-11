@@ -1,59 +1,54 @@
 import { $ } from "@wdio/globals";
-import Page from "./page";
+import Page from "./page.ts";
 
 class LoginPage extends Page {
-  private userField = $(
-    "//android.widget.ScrollView/android.widget.EditText[1]",
-  );
-  private passField = $(
-    "//android.widget.ScrollView/android.widget.EditText[2]",
-  );
-  private loginBtn = $('//android.widget.TextView[@text="Masuk"]');
-  private checkboxBtn = $("//android.widget.CheckBox");
-  private homeIndicator = $(
-    '//android.widget.TextView[@text="Pilih program yang mau diunduh"]',
-  );
-  getNotificationText(message: string) {
-    return $(`//android.widget.TextView[@text="${message}"]`);
+  public get userField() {
+    return $("//android.widget.ScrollView/android.widget.EditText[1]");
+  }
+  public get passField() {
+    return $("//android.widget.ScrollView/android.widget.EditText[2]");
+  }
+  public get loginBtn() {
+    return $('//android.widget.TextView[@text="Masuk"]');
+  }
+  public get checkboxBtn() {
+    return $("//android.widget.CheckBox");
+  }
+  public get homeIndicator() {
+    return $('//android.widget.TextView[@text="Pilih program yang mau diunduh"]');
   }
 
   async enterCredentials(username: string, password: string) {
-    // WDIO otomatis menunggu elemen ada (waitForExist) sebelum setValue
+    await this.userField.waitForDisplayed({
+      timeout: 10000,
+      timeoutMsg: "Field username tidak ditemukan!"
+    });
     await this.userField.setValue(username);
+
+    await this.passField.waitForDisplayed({
+      timeout: 10000,
+      timeoutMsg: "Field password tidak ditemukan!"
+    });
     await this.passField.setValue(password);
   }
 
   async clickLogin() {
+    await this.loginBtn.waitForDisplayed({
+      timeout: 10000,
+      timeoutMsg: "Tombol login tidak ditemukan!"
+    });
     await this.loginBtn.click();
   }
 
   async checkboxRememberMe() {
-    const element = this.checkboxBtn;
-    const status = await element.getAttribute("checked");
+    await this.checkboxBtn.waitForDisplayed({
+      timeout: 10000,
+      timeoutMsg: "Checkbox remember me tidak ditemukan!"
+    });
+    const status = await this.checkboxBtn.getAttribute("checked");
 
     if (status === "false" || status === null) {
-      await element.click();
-    }
-  }
-
-  async verifyMessage(message: string) {
-    const text: String = await this.getMessage(message);
-    return text;
-  }
-
-  async isAtLoginPage(timeoutMs: number = 30000) {
-    try {
-      return await this.userField.waitForDisplayed({ timeout: timeoutMs });
-    } catch (error) {
-      return false;
-    }
-  }
-
-  async isAtHomePage() {
-    try {
-      return await this.homeIndicator.waitForDisplayed({ timeout: 15000 });
-    } catch (error) {
-      return false;
+      await this.checkboxBtn.click();
     }
   }
 }

@@ -2,8 +2,11 @@ import { Given, When, Then } from "@wdio/cucumber-framework";
 import LoginPage from "../pages/login-pages.ts";
 
 Given("user is on the login page", async () => {
-  const isAtLogin = await LoginPage.isAtLoginPage();
-  if (!isAtLogin) throw new Error("User tidak berada di halaman login!");
+  const element = LoginPage.userField;
+  await expect(element).toBeDisplayed({
+      message: "User tidak berada di halaman login!",
+      wait: 10000
+  });
 });
 
 When(
@@ -21,12 +24,18 @@ When('user checks the "Remember Me" checkbox', async () => {
   await LoginPage.checkboxRememberMe();
 });
 
-Then("user should see the error message {string}", async (expectedMsg) => {
-  const actualMsg = await LoginPage.getMessage(expectedMsg);
-  expect(actualMsg).toBe(expectedMsg);
+Then("user should see the error message {string}", async (expectedMsg: string) => {
+  const notificationElement = LoginPage.getNotificationText(expectedMsg);
+  await expect(notificationElement).toBeDisplayed({
+      message: `Pesan error '${expectedMsg}' tidak ditemukan!`,
+      wait: 10000
+  });
 });
 
 Then("user should be redirected to the home page", async () => {
-  const isAtHome = await LoginPage.isAtHomePage();
-  expect(isAtHome).toBe(true);
+  const element = LoginPage.homeIndicator;
+  await expect(element).toBeDisplayed({
+      message: "User tidak berhasil dialihkan ke halaman Home!",
+      wait: 15000
+  });
 });

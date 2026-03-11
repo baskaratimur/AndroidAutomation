@@ -1,16 +1,22 @@
 import { Given, When, Then } from "@wdio/cucumber-framework";
 import ProgramPages from "../pages/program-pages.ts";
 
-let isProgramFound: boolean;
-
 Given("user is on the select program page", async () => {
-  const isAtProgram = await ProgramPages.isAtSelectProgram();
-  expect(isAtProgram).toBe(true);
+  const element = ProgramPages.selectProgramIndicator;
+  await expect(element).toBeDisplayed({
+    message: "Halaman pilih program tidak ditemukan!",
+    wait: 10000
+  });
 });
 
-When("user searches for program {string} and expect to be true", async (programName) => {
-  isProgramFound = await ProgramPages.searchProgram(programName);
-  expect(isProgramFound).toBe(true);
+When("user searches for program {string} and expect to be true", async (programName: string) => {
+  await ProgramPages.searchProgram(programName);
+
+  const resultElement = ProgramPages.resultSearchedProgram;
+  await expect(resultElement).toBeDisplayed({
+    message: `Program pencarian '${programName}' tidak ditemukan!`,
+    wait: 10000
+  });
 });
 
 When("user clears the search field", async () => {
@@ -30,16 +36,41 @@ When("user clicks the download button", async () => {
 });
 
 Then("user should see progress download", async () => {
-  const progress = await ProgramPages.progressDownload();
-  expect(progress).toBe(true)
+  const downloadProgressList = [
+    'Data Program', 
+    'Lokasi Area Tanam', 
+    'Data Pohon Monitoring', 
+    'Master Data Spesies Pohon', 
+    'Data Lainnya'
+  ];
+
+  for (const [index, name] of downloadProgressList.entries()) {
+    const nameElement = ProgramPages.progressNameIndicator(name);
+    await expect(nameElement).toBeDisplayed({ 
+      message: `The progress indicator: ${name} should be displayed`,
+      wait: 10000 
+    });
+
+    const statusElement = ProgramPages.progressStatusIndicator(index + 1);
+    await expect(statusElement).toBeDisplayed({ 
+      message: `The status for indicator: ${name} should be completed`,
+      wait: 50000 
+    });
+  }
 });
 
 Then("user should see download information {string}", async (message: string) => {
-  const isAtDownloadCompleted = await ProgramPages.isAtDownloadCompleted(message);
-  expect(isAtDownloadCompleted).toBe(true);
+  const element = ProgramPages.downloadIndicator(message);
+  await expect(element).toBeDisplayed({ 
+      message: `The indicator: ${message} should be displayed`,
+      wait: 50000 
+  });
 });
 
 Then("user should see message {string}", async (message: string) => {
-  const actualMsg = await ProgramPages.verifyMessage(message);
-  await expect(actualMsg).toBe(message);
+  const notificationElement = ProgramPages.getNotificationText(message);
+  await expect(notificationElement).toBeDisplayed({
+      message: `Pesan '${message}' tidak ditemukan!`,
+      wait: 10000
+  });
 });
