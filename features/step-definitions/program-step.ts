@@ -29,12 +29,17 @@ When("user clicks the download button", async () => {
   await ProgramPages.clickDownload();
 });
 
-Then("user should see download complete", async () => {
-  const isAtDownloadCompleted = await ProgramPages.isAtDownloadCompleted();
+Then("user should see progress download", async () => {
+  const progress = await ProgramPages.progressDownload();
+  expect(progress).toBe(true)
+});
+
+Then("user should see download information {string}", async (message: string) => {
+  const isAtDownloadCompleted = await ProgramPages.isAtDownloadCompleted(message);
   expect(isAtDownloadCompleted).toBe(true);
 });
 
-Then("user should see program message {string}", async (message) => {
+Then("user should see message {string}", async (message: string) => {
   const actualMsg = await ProgramPages.verifyMessage(message);
   await expect(actualMsg).toBe(message);
 });

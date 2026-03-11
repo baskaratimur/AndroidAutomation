@@ -20,9 +20,9 @@ class ProgramPages extends Page {
       `//android.widget.ScrollView/android.view.View[${programIndex}]/android.widget.CheckBox`,
     );
   }
-  private downloadCompletedIndicator = $(
-    "//android.widget.TextView[@text='Unduhan Selesai']"
-  );
+  private downloadIndicator(message: string) {
+    return $(`//android.widget.TextView[@text='${message}']`);
+  }
 
   async isAtSelectProgram() {
     await this.selectProgramIndicator.waitForDisplayed({
@@ -68,12 +68,52 @@ class ProgramPages extends Page {
     await this.downloadBtn.click();
   }
 
-  async isAtDownloadCompleted() {
-    await this.downloadCompletedIndicator.waitForDisplayed({
+  async progressDownload(){
+    const downloadProgressList = [
+      'Data Program', 
+      'Lokasi Area Tanam', 
+      'Data Pohon Monitoring', 
+      'Master Data Spesies Pohon', 
+      'Data Lainnya'
+    ];
+    try {
+      for (const [index, name] of downloadProgressList.entries()){
+        const isDisplayed = await $(`//android.widget.TextView[@text='${name}']`).waitForDisplayed({timeout: 50000});
+        console.log("mencari", name)
+        console.log(isDisplayed,"<<")
+        expect(isDisplayed).toBe(true)
+
+        const isDoneDownload = await ($(`(//android.widget.TextView[@text='Selesai'])[${index + 1}]`)).waitForDisplayed({timeout:50000});
+        console.log("mencari", index+1)
+        expect(isDoneDownload).toBe(true)
+      }
+      return true;   
+    // try {
+    //   await expect($("//android.widget.TextView[@text='Data Program']")).waitForDisplayed({timeout: 50000});
+    //   await expect($("(//android.widget.TextView[@text='Selesai'])[1]")).toBeDisplayed();
+  
+    //   await expect($("//android.widget.TextView[@text='Lokasi Area Tanam']")).toBeDisplayed();
+    //   await expect($("(//android.widget.TextView[@text='Selesai'])[2]")).toBeDisplayed();
+  
+    //   await expect($("//android.widget.TextView[@text='Data Pohon Monitoring']")).toBeDisplayed();
+    //   await expect($("(//android.widget.TextView[@text='Selesai'])[3]")).toBeDisplayed();
+  
+    //   await expect($("//android.widget.TextView[@text='Master Data Species Pohon']")).toBeDisplayed();
+    //   await expect($("(//android.widget.TextView[@text='Selesai'])[4]")).toBeDisplayed();
+  
+    //   await expect($("//android.widget.TextView[@text='Data Lainnya']")).toBeDisplayed();
+    //   await expect($("(//android.widget.TextView[@text='Selesai'])[5]")).toBeDisplayed();
+    } catch (error) {
+      return false;
+    }
+  }
+
+  async isAtDownloadCompleted(message: string) {
+    await this.downloadIndicator(message).waitForDisplayed({
       timeout: 50000,
       timeoutMsg: "User tidak berada di halaman unduhan selesai!",
     });
-    return await this.downloadCompletedIndicator.isDisplayed();
+    return await this.downloadIndicator(message).isDisplayed();
   }
 }
 
