@@ -42,20 +42,22 @@ Before({ tags: '@authenticated' }, async () => {
     if (atLogin) {
         console.log('>>> Sesi tidak ditemukan, melakukan login otomatis...');
         
+        let success = false;
         await LoginPage.enterCredentials('baskaratesting4', 'Jejakin2023!');
         await LoginPage.clickLogin();
         
-        let success = false;
         try {
-            await LoginPage.homeIndicator.waitForDisplayed({ timeout: 15000 });
+            console.log('>>> Waiting for program indicator...');
+            await LoginPage.programIndicator.waitForDisplayed({ timeout: 15000 });
             success = true;
+            console.log('>>>', success);
         } catch (e) {}
 
         if (!success) {
             console.error('>>> Gagal login otomatis, mencoba reload app...');
             await driver.terminateApp(appId);
             await driver.activateApp(appId);
-            await LoginPage.enterCredentials('baskaratesting1', 'Jejakin2023!');
+            await LoginPage.enterCredentials('baskaratesting4', 'Jejakin2023!');
             await LoginPage.clickLogin();
         }
         console.log('>>> Login berhasil'); 
