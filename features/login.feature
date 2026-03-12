@@ -20,4 +20,4 @@ Feature: Login Functionality
     When user enters username "baskaratesting4" and password "Jejakin2023!"
     And user checks the "Remember Me" checkbox
     And user clicks login button
-    Then user should be redirected to the home page
+    Then user should be redirected to the select program page

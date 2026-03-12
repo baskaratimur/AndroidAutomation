@@ -8,16 +8,16 @@ class ProgramPages extends Page {
   public get searchField() {
     return $("//android.widget.EditText");
   }
-  public get resultSearchedProgram() {
-    return $('//android.widget.TextView[@text="Program Geotagging - North Rosalinda"]');
-  }
   public get refreshProgramBtn() {
     return $("//androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[1]");
   }
   public get downloadBtn() {
     return $("//androidx.compose.ui.platform.ComposeView/android.view.View/android.view.View/android.view.View[3]");
   }
-  
+  public get completeDownloadBtn(){
+    return $("(//android.widget.TextView[@text='Selesai'])[6]")
+  }
+
   public selectProgramLocator(programIndex: number) {
     return $(`//android.widget.ScrollView/android.view.View[${programIndex}]/android.widget.CheckBox`);
   }
@@ -32,6 +32,14 @@ class ProgramPages extends Page {
 
   public progressStatusIndicator(index: number) {
     return $(`(//android.widget.TextView[@text='Selesai'])[${index}]`);
+  }
+
+  public programListItem(name: string) {
+    return $(`//android.widget.TextView[@text="${name}"]`);
+  }
+
+  public getPlacehodlerSearchfield(placeholder: string){
+    return $(`//android.widget.TextView[@text="${placeholder}"]`)
   }
 
   async searchProgram(programName: string) {

@@ -14,7 +14,7 @@ class LoginPage extends Page {
   public get checkboxBtn() {
     return $("//android.widget.CheckBox");
   }
-  public get homeIndicator() {
+  public get programIndicator() {
     return $('//android.widget.TextView[@text="Pilih program yang mau diunduh"]');
   }
 
