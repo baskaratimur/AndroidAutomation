@@ -32,8 +32,8 @@ Then("user should see the error message {string}", async (expectedMsg: string) =
   });
 });
 
-Then("user should be redirected to the home page", async () => {
-  const element = LoginPage.homeIndicator;
+Then("user should be redirected to the select program page", async () => {
+  const element = LoginPage.programIndicator;
   await expect(element).toBeDisplayed({
       message: "User tidak berhasil dialihkan ke halaman Home!",
       wait: 15000

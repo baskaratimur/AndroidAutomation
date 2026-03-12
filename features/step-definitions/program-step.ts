@@ -1,5 +1,6 @@
 import { Given, When, Then } from "@wdio/cucumber-framework";
 import ProgramPages from "../pages/program-pages.ts";
+import PrivacyPages from "../pages/privacy-pages.ts";
 
 Given("user is on the select program page", async () => {
   const element = ProgramPages.selectProgramIndicator;
@@ -9,18 +10,35 @@ Given("user is on the select program page", async () => {
   });
 });
 
-When("user searches for program {string} and expect to be true", async (programName: string) => {
+When("user searches for program {string}", async (programName: string) => {
   await ProgramPages.searchProgram(programName);
+});
 
-  const resultElement = ProgramPages.resultSearchedProgram;
+Then("user should see the program {string} in the list", async (programName: string) => {
+  const resultElement = ProgramPages.programListItem(programName);
   await expect(resultElement).toBeDisplayed({
-    message: `Program pencarian '${programName}' tidak ditemukan!`,
+    message: `Program '${programName}' seharusnya muncul di daftar!`,
+    wait: 10000
+  });
+});
+
+Then("user should not see the program {string}", async (programName: string) => {
+  const resultElement = ProgramPages.programListItem(programName);
+  await expect(resultElement).not.toBeDisplayed({
+    message: `Program '${programName}' seharusnya tidak muncul di daftar!`,
     wait: 10000
   });
 });
 
 When("user clears the search field", async () => {
   await ProgramPages.clearSearchField();
+});
+
+Then('user should see the searchfield placeholder is {string}', async (placeholder: string) => {
+  const placeholderElement = ProgramPages.getPlacehodlerSearchfield(placeholder);
+  await expect(placeholderElement).toBeDisplayed({
+    message: `Placeholder seharusnya adalah '${placeholder}'`
+  });
 });
 
 When("user clicks the refresh program button", async () => {
@@ -74,3 +92,15 @@ Then("user should see message {string}", async (message: string) => {
       wait: 10000
   });
 });
+
+When("user click button complete", async () => {
+  await ProgramPages.completeDownloadBtn.click();
+});
+
+Then("user redirected to privacy page", async () => {
+  const privacyElement = PrivacyPages.privacyIndicator
+  await expect(privacyElement).toBeDisplayed({
+    message: "Failed to redirect to privacy page",
+    wait: 5000
+  })
+})
