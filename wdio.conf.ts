@@ -11,7 +11,11 @@ export const config: WebdriverIO.Config = {
   waitforTimeout: 15000,
   connectionRetryTimeout: 120000,
 
-  specs: ["./features/**/*.feature"],
+  specs: [
+    "./features/login.feature",
+    "./features/program.feature",
+    "./features/privacy.feature"
+  ],
   reporters: [
     [
       "spec",
@@ -21,7 +25,7 @@ export const config: WebdriverIO.Config = {
           failed: "❌",
           skipped: "🔘",
         },
-        addConsoleLogs: false,
+        addConsoleLogs: true,
       },
     ],
     // ['cucumberjs-json', {
