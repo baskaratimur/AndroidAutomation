@@ -15,7 +15,8 @@ export const config: WebdriverIO.Config = {
     "./features/login.feature",
     "./features/program.feature",
     "./features/privacy.feature",
-    "./features/homepage.feature"
+    "./features/homepage.feature",
+    "./features/profile.feature"
   ],
   reporters: [
     [
