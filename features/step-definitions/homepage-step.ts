@@ -3,11 +3,14 @@ import { $ } from "@wdio/globals";
 import HomepagePages from "../pages/homepage-pages.ts";
 
 Given("user is on the homepage", async () => {
-  const element = HomepagePages.homeFootbarIndicator;
-  await expect(element).toBeDisplayed({
-    message: "User tidak berada di halaman Homepage (Indikator Footbar tidak ditemukan)!",
-    wait: 10000
-  });
+  const footerMenus = ["Beranda", "Kirim Data", "Tarik Data", "Profil"];
+  for (const menutext of footerMenus) {
+    const footerElement = HomepagePages.textIndicator(menutext);
+    await expect(footerElement).toBeDisplayed({
+      message: `Menu footer '${menutext}' tidak ditemukan!`,
+      wait: 10000
+    });
+  }
 });
 
 Then("user should see homepage indicator {string}", async (text: string) => {
