@@ -17,6 +17,8 @@
     "test": "npx wdio run ./wdio.conf.ts",
     "send-report": "npx tsx ./src/utils/send-to-teams.ts",
     "login": "npx wdio run ./wdio.conf.ts --spec features/login.feature",
-    "program": "npx wdio run ./wdio.conf.ts --spec features/program.feature"
+    "program": "npx wdio run ./wdio.conf.ts --spec features/program.feature",
+    "privacy": "npx wdio run ./wdio.conf.ts --spec features/privacy.feature",
+    "homepage": "npx wdio run ./wdio.conf.ts --spec features/homepage.feature"
   }
 }
