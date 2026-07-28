@@ -126,16 +126,16 @@ const sendReportToTeams = async () => {
       },
     ],
   };
-  console.log("📊 Sending report to Microsoft Teams...");
-  console.log(JSON.stringify(message, null, 2));
-  try {
-    await axios.post(webhookUrl, message);
-    console.log(
-      "✅ Report successfully sent to Microsoft Teams with actual failed data.",
-    );
-  } catch (error: any) {
-    console.error("❌ Error sending report:", error.message);
-  }
+//   console.log("📊 Sending report to Microsoft Teams...");
+//   console.log(JSON.stringify(message, null, 2));
+//   try {
+//     await axios.post(webhookUrl, message);
+//     console.log(
+//       "✅ Report successfully sent to Microsoft Teams with actual failed data.",
+//     );
+//   } catch (error: any) {
+//     console.error("❌ Error sending report:", error.message);
+//   }
 };
 
 sendReportToTeams();

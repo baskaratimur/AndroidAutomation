@@ -1,14 +1,14 @@
 import { Before } from '@wdio/cucumber-framework';
 import LoginPage from '../pages/login-pages.ts';
 
+const appId = process.env.app_id || '';
+const activityId = process.env.activity_id || '';
+
 Before({ tags: '@noResetSession' }, async () => {
     console.log('>>> Hook @noReset aktif: Kita tidak akan mematikan aplikasi');
 });
 
 Before({ tags: '@resetSession' }, async () => {
-    const appId = 'com.jejakin.atlas.dev';
-    const activityId = 'com.jejakin.atlas.screens.onboarding.LoginActivity';
-
     console.log(`>>> Hook @resetSession: Restarting ${appId} ke ${activityId}`);
 
     try {
@@ -29,13 +29,11 @@ Before({ tags: '@resetSession' }, async () => {
 
 // authenticated mastiin udah login atau belom, kalo udah lgsg eksekusi script di step
 Before({ tags: '@authenticated' }, async () => {
-    const appId = 'com.jejakin.atlas.dev';
-    
     console.log('>>> Hook @authenticated: Memeriksa sesi login...');
 
     let atLogin = false;
     try {
-        await LoginPage.userField.waitForDisplayed({ timeout: 5000 });
+        await LoginPage.loginBtn.waitForDisplayed({ timeout: 5000 });
         atLogin = true;
     } catch (e) {}
 

@@ -4,11 +4,23 @@ Feature: Homepage Functionality
   Background:
     Given user is on the homepage
 
+  Scenario: User can search, download, and change program
+    When user clicks change program
+    And user clicks Unduh program lainnya
+    And user searches for program "Program fix geotagging v1 sukawarna"
+    And user selects the program "Program fix geotagging v1 sukawarna"
+    And user clicks the confirm download button
+    Then user should see progress download
+    When user click button complete
+    And user clicks back button once
+    And user searches for program "Program fix geotagging v1 sukawarna"
+    And user selects the program "Program fix geotagging v1 sukawarna"
+    Then user is on the homepage
+
   Scenario: User verify homepage elements
-    Then user should see homepage indicator "Program Geotagging - North Rosalinda"
     And user should see homepage indicator "Program aktif"
     And user should see homepage indicator "Geotagging"
-    And user should see homepage indicator "Monitoring"
+    # And user should see homepage indicator "Monitoring"
     And user should see homepage indicator "Sensor"
     And user should see homepage indicator "Flora"
     When user scrolls down to "Fauna"

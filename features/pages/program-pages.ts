@@ -67,7 +67,7 @@ class ProgramPages extends Page {
   }
 
   async selectProgram() {
-    for (let i = 1; i <= 2; i++) {
+    for (let i = 1; i <= 4; i++) {
       const checkbox = this.selectProgramLocator(i);
       await checkbox.waitForDisplayed({
         timeout: 10000,

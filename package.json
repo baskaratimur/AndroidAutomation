@@ -20,6 +20,7 @@
     "program": "npx wdio run ./wdio.conf.ts --spec features/program.feature",
     "privacy": "npx wdio run ./wdio.conf.ts --spec features/privacy.feature",
     "homepage": "npx wdio run ./wdio.conf.ts --spec features/homepage.feature",
-    "profile": "npx wdio run ./wdio.conf.ts --spec features/profile.feature"
+    "profile": "npx wdio run ./wdio.conf.ts --spec features/profile.feature",
+    "geotagging": "npx wdio run ./wdio.conf.ts --spec features/geotagging.feature"
   }
 }

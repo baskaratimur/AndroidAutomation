@@ -73,12 +73,14 @@ class HomepagePages extends Page {
   async clickBackButtons() {
     await this.backButton1.waitForDisplayed({ timeout: 10000, timeoutMsg: "Tombol Back pertama tidak ditemukan!" });
     await this.backButton1.click();
-    console.log("bback 1 passed")
     await driver.pause(3000);
 
     await this.backButton2.waitForDisplayed({ timeout: 10000, timeoutMsg: "Tombol Back kedua tidak ditemukan!" });
     await this.backButton2.click();
-    console.log("bback 2 passed")
+  }
+
+  public get btnGeotagging() {
+    return $('//android.view.View[@content-desc="Geotagging"]');
   }
 }
 

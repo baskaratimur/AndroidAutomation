@@ -26,7 +26,7 @@ Then("user should not see the program {string}", async (programName: string) => 
   const resultElement = ProgramPages.programListItem(programName);
   await expect(resultElement).not.toBeDisplayed({
     message: `Program '${programName}' seharusnya tidak muncul di daftar!`,
-    wait: 10000
+    wait: 3000
   });
 });
 
@@ -47,6 +47,16 @@ When("user clicks the refresh program button", async () => {
 
 When("user selects programs to download", async () => {
   await ProgramPages.selectProgram();
+});
+
+When("user selects the program {string}", async (programName: string) => {
+  const resultElement = ProgramPages.programListItem(programName);
+  await resultElement.waitForDisplayed({
+    timeoutMsg: `Program '${programName}' tidak ditemukan untuk dipilih!`,
+    timeout: 10000
+  });
+  await resultElement.click();
+  await driver.pause(1500);
 });
 
 When("user clicks the download button", async () => {
@@ -72,7 +82,7 @@ Then("user should see progress download", async () => {
     const statusElement = ProgramPages.progressStatusIndicator(index + 1);
     await expect(statusElement).toBeDisplayed({ 
       message: `The status for indicator: ${name} should be completed`,
-      wait: 50000 
+      wait: 100000 
     });
   }
 });

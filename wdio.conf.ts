@@ -1,6 +1,10 @@
 import * as fs from "node:fs";
 import * as Table from "cli-table3";
 import { execSync } from 'child_process';
+import dotenv from "dotenv";
+
+dotenv.config({ path: `.env.${process.env.ENV || 'dev'}` });
+
 
 export const config: WebdriverIO.Config = {
   maxInstances: 1,
@@ -16,6 +20,8 @@ export const config: WebdriverIO.Config = {
     "./features/program.feature",
     "./features/privacy.feature",
     "./features/homepage.feature",
+    "./features/geotagging.feature",
+    "./features/datasaya.feature",
     "./features/profile.feature"
   ],
   reporters: [
@@ -57,8 +63,12 @@ export const config: WebdriverIO.Config = {
     {
       "appium:platformName": "Android",
       "appium:automationName": "UiAutomator2",
-      "appium:deviceName": "emulator-5554",
-      "appium:app": "./src/test-data/automation-pijak.apk",
+      // "appium:deviceName": "emulator-5554",
+      "appium:deviceName": "RR8M20NSXWT",
+      // "appium:app": "./src/test-data/automation-pijak.apk",
+      "appium:appPackage": process.env.app_id,
+      "appium:appActivity": process.env.activity_id,
+      // "appium:enforceAppInstall": true,
       "appium:noReset": true,
       "appium:fullReset": false,
       "appium:newCommandTimeout": 300,
@@ -74,7 +84,7 @@ export const config: WebdriverIO.Config = {
   //   "automationName": "UiAutomator2",
   //   "platformName": "Android",
   //   "appPackage": "com.jejakin.atlas.dev",
-  //   "appium:appActivity": "com.jejakin.atlas.screens.program.ProgramActivity",
+  //   "appium:appActivity": "com.jejakin.atlas.screens.onboarding.LoginActivity",
   //   "deviceName": "VirtualDevice",
   //   "appium:noReset": true,
   //   "appium:fullReset": false
@@ -87,7 +97,6 @@ export const config: WebdriverIO.Config = {
         args: {
           relaxedSecurity: true,
         },
-        command: "appium",
       },
     ],
   ],
@@ -103,7 +112,7 @@ export const config: WebdriverIO.Config = {
     source: true,
     strict: false,
     tagExpression: "",
-    timeout: 120000,
+    timeout: 3600000,
     ignoreUndefinedDefinitions: false,
   },
 

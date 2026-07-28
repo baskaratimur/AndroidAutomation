@@ -45,21 +45,22 @@ When("user clicks on {string} menu", async (menu: string) => {
 Then("user should see privacy policy content", async () => {
     await expect(ProfilePages.textIndicatorKebijakanPrivasiIndex2).toBeDisplayed({ wait: 10000 });
     await expect(ProfilePages.textIndicatorKebijakanPrivasiIndex1).toBeDisplayed({ wait: 10000 });
-    await expect(ProfilePages.textIndicator("Cakupan dan Penerimaan")).toBeDisplayed({ wait: 10000 });
-    await expect(ProfilePages.textIndicator("Pengumpulan Informasi")).toBeDisplayed({ wait: 10000 });
-    await expect(ProfilePages.textIndicator("Tujuan Penggunaan Data")).toBeDisplayed({ wait: 10000 });
-    await expect(ProfilePages.textIndicator("Keamanan Pembagian Data")).toBeDisplayed({ wait: 10000 });
-    
-    await ProfilePages.scrollToText("Hak Pengguna");
+    const titles = [
+        "Cakupan dan Penerimaan",
+        "Pengumpulan Informasi",
+        "Tujuan Penggunaan Data",
+        "Keamanan Pembagian Data",
+        "Hak Pengguna",
+        "Cookie dan Pelacakan",
+        "Penyimpanan dan Penghapusan Data",
+        "Kontak dan Keluhan",
+        "https://www.jejakin.com/privacy-policy"
+    ];
 
-    await expect(ProfilePages.textIndicator("Hak Pengguna")).toBeDisplayed({ wait: 10000 });
-    await expect(ProfilePages.textIndicator("Cookie dan Pelacakan")).toBeDisplayed({ wait: 10000 });
-    await expect(ProfilePages.textIndicator("Penyimpanan dan Penghapusan Data")).toBeDisplayed({ wait: 10000 });
-    await expect(ProfilePages.textIndicator("Kontak dan Keluhan")).toBeDisplayed({ wait: 10000 });
-    
-    await ProfilePages.scrollToText("https://www.jejakin.com/privacy-policy");
-
-    await expect(ProfilePages.textIndicator("https://www.jejakin.com/privacy-policy")).toBeDisplayed({ wait: 10000 });
+    for (const title of titles) {
+        await ProfilePages.scrollToText(title);
+        await expect(ProfilePages.textIndicator(title)).toBeDisplayed({ wait: 5000 });
+    }
 });
 
 When("user presses back button", async () => {
@@ -70,21 +71,22 @@ When("user presses back button", async () => {
 Then("user should see terms and conditions content", async () => {
     await expect(ProfilePages.textIndicatorSyaratKetentuanIndex2).toBeDisplayed({ wait: 10000 });
     await expect(ProfilePages.textIndicatorSyaratKetentuanIndex1).toBeDisplayed({ wait: 10000 });
-    await expect(ProfilePages.textIndicator("Gambaran Umum dan Penerimaan")).toBeDisplayed({ wait: 10000 });
-    await expect(ProfilePages.textIndicator("Pengaturan dan Keamanan Akun")).toBeDisplayed({ wait: 10000 });
-    await expect(ProfilePages.textIndicator("Layanan yang Disediakan")).toBeDisplayed({ wait: 10000 });
-    await expect(ProfilePages.textIndicator("Transaksi dan Pembayaran")).toBeDisplayed({ wait: 10000 });
+    const titles = [
+        "Gambaran Umum dan Penerimaan",
+        "Pengaturan dan Keamanan Akun",
+        "Layanan yang Disediakan",
+        "Transaksi dan Pembayaran",
+        "Aktivitas Terlarang dan Pembatasan Penggunaan",
+        "Kekayaan Intelektual",
+        "Batasan Tanggung Jawab dan Pernyataan Penyangkalan",
+        "Hukum yang Mengatur dan Penyelesaian Sengketa",
+        "Penghentian dan Perubahan"
+    ];
 
-    await ProfilePages.scrollToText("Aktivitas Terlarang dan Pembatasan Penggunaan");
-
-    await expect(ProfilePages.textIndicator("Aktivitas Terlarang dan Pembatasan Penggunaan")).toBeDisplayed({ wait: 10000 });
-    await expect(ProfilePages.textIndicator("Kekayaan Intelektual")).toBeDisplayed({ wait: 10000 });
-    await expect(ProfilePages.textIndicator("Batasan Tanggung Jawab dan Pernyataan Penyangkalan")).toBeDisplayed({ wait: 10000 });
-    await expect(ProfilePages.textIndicator("Hukum yang Mengatur dan Penyelesaian Sengketa")).toBeDisplayed({ wait: 10000 });
-    
-    await ProfilePages.scrollToText("Penghentian dan Perubahan");
-
-    await expect(ProfilePages.textIndicator("Penghentian dan Perubahan")).toBeDisplayed({ wait: 10000 });
+    for (const title of titles) {
+        await ProfilePages.scrollToText(title);
+        await expect(ProfilePages.textIndicator(title)).toBeDisplayed({ wait: 5000 });
+    }
 });
 
 Then("user should see language options", async () => {

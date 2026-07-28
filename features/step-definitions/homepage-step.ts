@@ -3,7 +3,35 @@ import { $ } from "@wdio/globals";
 import HomepagePages from "../pages/homepage-pages.ts";
 
 Given("user is on the homepage", async () => {
-  const footerMenus = ["Beranda", "Kirim Data", "Tarik Data", "Profil"];
+  let isOnHomepage = false;
+  for (let i = 0; i < 5; i++) {
+    const programAktif = HomepagePages.textIndicator("Program aktif");
+    if (await programAktif.isDisplayed()) {
+      isOnHomepage = true;
+      break;
+    }
+
+    console.log("⚠️ Tidak berada di homepage, mencoba menekan tab 'Beranda'...");
+    const tabBeranda = HomepagePages.textIndicator("Beranda");
+    if (await tabBeranda.isDisplayed()) {
+      await tabBeranda.click();
+      await driver.pause(2000);
+      if (await programAktif.isDisplayed()) {
+        isOnHomepage = true;
+        break;
+      }
+    }
+
+    console.log("⚠️ Tab Beranda tidak ditemukan atau belum mencapai homepage, menekan tombol Back...");
+    await driver.back(); // Standard W3C way to press back, fixes deprecation warning
+    await driver.pause(2000);
+  }
+
+  if (!isOnHomepage) {
+    console.warn("⚠️ Gagal mencapai homepage secara otomatis setelah 5 kali menekan tombol back.");
+  }
+
+  const footerMenus = ["Beranda", "Data Saya", "Tarik Data", "Profil"];
   for (const menutext of footerMenus) {
     const footerElement = HomepagePages.textIndicator(menutext);
     await expect(footerElement).toBeDisplayed({
@@ -52,4 +80,10 @@ When("user clicks the confirm download button", async () => {
 
 When("user navigates back to homepage", async () => {
   await HomepagePages.clickBackButtons();
+});
+
+When("user clicks back button once", async () => {
+  await HomepagePages.backButton1.waitForDisplayed({ timeout: 10000 });
+  await HomepagePages.backButton1.click();
+  await driver.pause(2000);
 });

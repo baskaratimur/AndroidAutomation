@@ -5,8 +5,8 @@ Feature: Program Functionality
     Given user is on the select program page
 
   Scenario: User can search and clear search program
-    When user searches for program "North Rosalinda"
-    Then user should see the program "Program Geotagging - North Rosalinda" in the list
+    When user searches for program "fix geotagging v1"
+    Then user should see the program "Program fix geotagging v1 sukawarna" in the list
     And user should not see the program "Program Geotagging Monitoring 2 fix"
     When user clears the search field
     Then user should see the searchfield placeholder is "Cari Program"

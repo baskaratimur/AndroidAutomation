@@ -19,7 +19,7 @@ out/
 .env.development.local
 .env.test.local
 .env.production.local
-
+mcp/*
 # WebdriverIO & Test Reports
 .test_results/
 allure-results/
